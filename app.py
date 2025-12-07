@@ -401,13 +401,13 @@ if st.session_state.compressed_data is not None and st.session_state.original_si
     st.subheader("📊 Step 4: Results & Analysis")
 
     import math
-    
+
     # Calculate ACTUAL binary compressed size for metrics (bits → bytes)
     if technique == "RLE":
         # RLE binary format: each run = 1 byte (count) + 1 byte (char) = 2 bytes
         num_runs = len(st.session_state.compressed_data) // 2
         compressed_size = num_runs * 2  # bytes
-        
+
     elif technique == "LZW":
         # LZW: calculate actual bits needed based on maximum code value
         codes = st.session_state.lzw_codes if hasattr(st.session_state, 'lzw_codes') and st.session_state.lzw_codes else []
@@ -418,7 +418,7 @@ if st.session_state.compressed_data is not None and st.session_state.original_si
             compressed_size = math.ceil(total_bits / 8)  # convert bits to bytes (round up)
         else:
             compressed_size = len(st.session_state.compressed_data)
-            
+
     elif technique == "Huffman":
         # Huffman: binary string length in bits → bytes
         if isinstance(st.session_state.compressed_data, bytes):
@@ -427,7 +427,7 @@ if st.session_state.compressed_data is not None and st.session_state.original_si
             compressed_size = math.ceil(total_bits / 8)  # convert to bytes
         else:
             compressed_size = len(st.session_state.compressed_data)
-            
+
     elif technique == "Golomb":
         # Golomb: sum up all codeword bit lengths
         if hasattr(st.session_state, 'golomb_codewords') and st.session_state.golomb_codewords:
@@ -435,11 +435,11 @@ if st.session_state.compressed_data is not None and st.session_state.original_si
             compressed_size = math.ceil(total_bits / 8)  # convert to bytes
         else:
             compressed_size = len(st.session_state.compressed_data)
-            
+
     else:
         # For lossy compression (images), use actual byte size
         compressed_size = len(st.session_state.compressed_data)
-    
+
     original_size = st.session_state.original_size
     size_reduction = original_size - compressed_size
     compression_ratio = (
@@ -500,21 +500,7 @@ if st.session_state.compressed_data is not None and st.session_state.original_si
         ],
     }
     st.table(stats_data)
-
-    # Verification for lossless
-    if (
-        mode == "Lossless Compression"
-        and st.session_state.decompressed_data is not None
-        and uploaded_file is not None
-    ):
-        st.markdown("### ✅ Verification")
-        original_data = uploaded_file.getvalue()
-        if st.session_state.decompressed_data == original_data:
-            st.success(
-                " ✅ Decompressed data **MATCHES** original! (Lossless compression verified)"
-            )
-        else:
-            st.warning("⚠️ Decompressed data may not match (check data)")
+    st.markdown("---")
 
     # Image Preview for lossy
     if mode == "Lossy Compression (Images)":
@@ -554,5 +540,3 @@ st.sidebar.success(
     - Lossy: png, jpg, jpeg, bmp, gif, webp
 """
 )
-
-
