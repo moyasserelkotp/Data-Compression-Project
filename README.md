@@ -76,6 +76,12 @@ Use `sample.txt` for testing compression. When downloading decompressed files, t
 All compression algorithms are implemented from scratch without external compression libraries, providing a deep understanding of how each technique works.
 
 ---
+##  deployment 
+
+url: https://data-compression-project-fuxsjqhmyt3jfwgnwdqyka.streamlit.app/
+
+---
+
 
 **Status**: Production Ready ✓  
 **Last Updated**: November 27, 2025
