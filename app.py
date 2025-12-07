@@ -500,7 +500,6 @@ if st.session_state.compressed_data is not None and st.session_state.original_si
         ],
     }
     st.table(stats_data)
-    st.markdown("---")
 
     # Image Preview for lossy
     if mode == "Lossy Compression (Images)":
